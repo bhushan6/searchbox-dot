@@ -5,7 +5,6 @@ import {
   useRef,
   useState,
 } from "react";
-import { Button } from "../ui/button";
 import {
   List,
   LucideProps,
@@ -66,10 +65,10 @@ export const Dropdown = ({
   return (
     <div className="relative z-10" ref={dropdownRef}>
       <div
-        className="flex items-stretch px-3 cursor-pointer hover:rotate-90 transition-transform"
+        className="flex items-stretch px-3 pb-2 cursor-pointer"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <Settings className="w-6 h-6 text-gray-400" />
+        <Settings className="w-6 h-6 text-gray-400  hover:rotate-90 transition-transform" />
       </div>
 
       {showDropdown && (
