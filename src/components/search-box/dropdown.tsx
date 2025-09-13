@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { Switch } from "../ui/switch";
 import { ContentFilters, TabsType } from ".";
+import { AnimatePresence, motion } from "motion/react";
 
 export const DROPDOWN_DATA: Record<
   TabsType,
@@ -68,44 +69,67 @@ export const Dropdown = ({
         className="flex items-stretch px-3 pb-2 cursor-pointer"
         onClick={() => setShowDropdown(!showDropdown)}
       >
-        <Settings className="w-6 h-6 text-gray-400  hover:rotate-90 transition-transform" />
+        <Settings
+          className={`w-6 h-6 text-gray-400 transition-transform ${
+            showDropdown ? "rotate-90" : "rotate-0"
+          } `}
+        />
       </div>
-
-      {showDropdown && (
-        <div className="absolute right-0 -bottom-2 translate-y-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 p-3 z-50">
-          <div className="space-y-3">
-            {Object.entries(DROPDOWN_DATA).map(([key, value]) => {
-              const dropdownOptionName = key as TabsType;
-              return (
-                <div
-                  key={dropdownOptionName}
-                  className="flex items-center justify-between"
-                >
+      <AnimatePresence>
+        {showDropdown && (
+          <motion.div
+            className="absolute right-0 -bottom-2 translate-y-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200  z-50 overflow-hidden"
+            transition={{
+              height: { duration: 0.3 },
+              opacity: { duration: 0.2 },
+            }}
+            animate={{
+              height: "auto",
+              opacity: 1,
+            }}
+            initial={{
+              height: 0,
+              opacity: 0.25,
+            }}
+            exit={{
+              height: 0,
+              opacity: 0.25,
+            }}
+          >
+            <div className="space-y-3 p-3">
+              {Object.entries(DROPDOWN_DATA).map(([key, value]) => {
+                const dropdownOptionName = key as TabsType;
+                return (
                   <div
-                    className={`flex items-center gap-2 ${
-                      contentFilters[dropdownOptionName]
-                        ? "text-gray-600"
-                        : "text-gray-400"
-                    }`}
+                    key={dropdownOptionName}
+                    className="flex items-center justify-between"
                   >
-                    <value.Icon className={"w-4 h-4"} />
-                    <span className="text-sm font-medium">
-                      {dropdownOptionName.charAt(0).toUpperCase() +
-                        dropdownOptionName.slice(1)}
-                    </span>
+                    <div
+                      className={`flex items-center gap-2 ${
+                        contentFilters[dropdownOptionName]
+                          ? "text-gray-600"
+                          : "text-gray-400"
+                      }`}
+                    >
+                      <value.Icon className={"w-4 h-4"} />
+                      <span className="text-sm font-medium">
+                        {dropdownOptionName.charAt(0).toUpperCase() +
+                          dropdownOptionName.slice(1)}
+                      </span>
+                    </div>
+                    <Switch
+                      checked={contentFilters[dropdownOptionName]}
+                      onCheckedChange={() =>
+                        handleToggleFilter(dropdownOptionName)
+                      }
+                    />
                   </div>
-                  <Switch
-                    checked={contentFilters[dropdownOptionName]}
-                    onCheckedChange={() =>
-                      handleToggleFilter(dropdownOptionName)
-                    }
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      )}
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

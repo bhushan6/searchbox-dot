@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,8 @@ import { Skeleton } from "./skeleton";
 import { SearchItem } from "./search-item";
 import { Dropdown } from "./dropdown";
 import { Tabs } from "./tabs";
+import { motion } from "motion/react";
+import useMeasure from "react-use-measure";
 
 export type TabsType = "files" | "people" | "chats" | "lists";
 
@@ -26,6 +28,7 @@ export function SearchBox() {
     chats: false,
     lists: false,
   });
+
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -79,6 +82,7 @@ export function SearchBox() {
     setQuery("");
     setResults([]);
     setIsLoading(false);
+    inputRef.current?.focus();
   };
 
   const filteredResults = results.filter((result) => {
@@ -97,9 +101,30 @@ export function SearchBox() {
     }));
   };
 
+  const [ref, bounds] = useMeasure();
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const timer = useRef<NodeJS.Timeout>(null);
+
+  if (containerRef.current) {
+    timer.current && clearTimeout(timer.current);
+    containerRef.current.style.overflow = "hidden";
+    timer.current = setTimeout(() => {
+      containerRef.current!.style.overflow = "visible";
+    }, 1000);
+  }
+
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="bg-white rounded-2xl shadow-lg ">
+    <motion.div
+      className={`w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg`}
+      ref={containerRef}
+      initial={false}
+      transition={{
+        duration: 0.3,
+      }}
+      animate={{ height: bounds.height }}
+    >
+      <div ref={ref}>
         <div className="relative p-4 h-full">
           {isLoading ? (
             <Loader2 className="absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 animate-spin" />
@@ -107,7 +132,7 @@ export function SearchBox() {
             <Search className="absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 " />
           )}
           <Input
-            name="search"
+            name="search-box"
             type="text"
             placeholder="Search..."
             value={query}
@@ -150,8 +175,19 @@ export function SearchBox() {
             />
           </div>
         )}
-
-        <div className="max-h-96 overflow-y-auto">
+        <motion.div
+          key={filteredResults.length}
+          transition={{
+            duration: 0.3,
+          }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+          className="max-h-96 overflow-y-auto"
+        >
           {isLoading ? (
             <div className="p-2">
               {Array.from({ length: 6 }).map((_, i) => (
@@ -169,8 +205,8 @@ export function SearchBox() {
               No results found for "{query}"
             </div>
           ) : null}
-        </div>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
