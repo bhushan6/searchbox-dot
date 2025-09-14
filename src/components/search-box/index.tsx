@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Search, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -111,7 +111,7 @@ export function SearchBox() {
     containerRef.current.style.overflow = "hidden";
     timer.current = setTimeout(() => {
       containerRef.current!.style.overflow = "visible";
-    }, 1000);
+    }, 300);
   }
 
   return (
@@ -202,7 +202,7 @@ export function SearchBox() {
             </div>
           ) : query.length > 0 ? (
             <div className="p-8 text-center text-gray-500">
-              No results found for "{query}"
+              No results found for &#39;{query}&#39;
             </div>
           ) : null}
         </motion.div>

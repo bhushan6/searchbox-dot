@@ -23,7 +23,7 @@ export const Tabs = ({
     if (!contentFilters[activeTab]) {
       setActiveTab("all");
     }
-  }, [activeTab, contentFilters]);
+  }, [activeTab, contentFilters, setActiveTab]);
 
   return (
     <div className="flex items-center gap-6 ">
