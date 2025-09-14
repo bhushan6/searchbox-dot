@@ -15,15 +15,14 @@ import { useRef, useState } from "react";
 
 const HighlightText = ({ text = "", highlight = "" }) => {
   if (!highlight.trim()) {
-    return <span>{text}</span>;
+    return <span className="truncate inline-block max-w-full">{text}</span>;
   }
 
   const regex = new RegExp(`(${highlight})`, "gi");
-
   const parts = text.split(regex);
 
   return (
-    <span>
+    <span className="truncate inline-block max-w-full">
       {parts.map((part, index) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
           <span key={index} className="bg-orange-200">
@@ -36,8 +35,6 @@ const HighlightText = ({ text = "", highlight = "" }) => {
     </span>
   );
 };
-
-export default HighlightText;
 
 const CopyLinkButton = () => {
   const [content, setContent] = useState("Copy Link");
@@ -79,11 +76,11 @@ export const SearchItem = ({
 }) => (
   <div
     key={result.id}
-    className="p-3 hover:bg-gray-50 rounded-lg cursor-pointer flex items-center justify-between"
+    className="p-3 hover:bg-gray-50 rounded-lg cursor-pointer flex items-center justify-between gap-3"
   >
-    <div className="flex items-center gap-3  ">
+    <div className="flex items-center gap-3 min-w-0 flex-1">
       {result.type === "people" ? (
-        <div className="relative">
+        <div className="relative flex-shrink-0">
           <Avatar className="w-10 h-10">
             <AvatarImage
               src={result.avatar || "/placeholder.svg"}
@@ -103,7 +100,7 @@ export const SearchItem = ({
           />
         </div>
       ) : (
-        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
           {result.type === "files" && result.fileType === "video" ? (
             <Play className="w-5 h-5 text-gray-600" />
           ) : result.type === "files" ? (
@@ -115,18 +112,21 @@ export const SearchItem = ({
           )}
         </div>
       )}
-      <div className="flex-1 min-w-0">
+      <div className="min-w-0 flex-1">
         <div className="font-medium text-gray-900 truncate">
           <HighlightText text={result.name} highlight={query} />
         </div>
         <div className="text-sm text-gray-500 truncate">{result.subtitle}</div>
       </div>
     </div>
-    <div>
+    <div className="flex items-center justify-center flex-shrink-0">
       <CopyLinkButton />
-      <Button variant={"ghost"} className="cursor-pointer text-gray-400">
+      <Button
+        variant={"ghost"}
+        className="cursor-pointer text-gray-400 items-center gap-2 flex"
+      >
         <SquareArrowOutUpRight />
-        New Tab
+        <span className="hidden sm:inline">New Tab</span>
       </Button>
     </div>
   </div>

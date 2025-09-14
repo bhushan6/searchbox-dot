@@ -3,6 +3,7 @@ import { SetStateAction, useEffect } from "react";
 import { SearchResult } from "./mock-data";
 import { DROPDOWN_DATA } from "./dropdown";
 import { motion } from "motion/react";
+import { LayoutGrid } from "lucide-react";
 
 export const Tabs = ({
   contentFilters,
@@ -35,8 +36,16 @@ export const Tabs = ({
             : "border-transparent text-gray-500 hover:text-gray-700"
         }`}
       >
-        All
-        <span className="text-sm text-gray-400">{allCount}</span>
+        <div className="relative">
+          <LayoutGrid className="w-4 h-4" />
+          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 sm:hidden">
+            {allCount}
+          </span>
+        </div>
+        <span className="hidden sm:inline">All</span>
+        <span className="hidden text-sm text-gray-400 sm:inline">
+          {allCount}
+        </span>
         {activeTab === "all" && (
           <motion.div
             layoutId="highlight"
@@ -58,10 +67,17 @@ export const Tabs = ({
                 : "border-transparent text-gray-500 hover:text-gray-700"
             }`}
           >
+            <div className="relative">
             <value.Icon className="w-4 h-4" />
-            {dropdownOptionName.charAt(0).toUpperCase() +
-              dropdownOptionName.slice(1)}
-            <span className="text-sm text-gray-400">
+            <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 sm:hidden">
+              {results.filter((r) => r.type === dropdownOptionName).length}
+            </span>
+          </div>
+            <span className="hidden sm:inline">
+              {dropdownOptionName.charAt(0).toUpperCase() +
+                dropdownOptionName.slice(1)}
+            </span>
+            <span className="hidden text-sm text-gray-400 sm:inline">
               {results.filter((r) => r.type === dropdownOptionName).length}
             </span>
             {activeTab === dropdownOptionName && (
