@@ -30,26 +30,26 @@ export const Tabs = ({
     <div className="flex items-center gap-6 ">
       <button
         onClick={() => setActiveTab("all")}
-        className={`relative box-border flex items-center gap-2 px-2 pb-2 transition-colors cursor-pointer ${
+        className={`relative box-border flex cursor-pointer items-center gap-2 px-2 pb-2 transition-colors ${
           activeTab === "all"
-            ? "border-black text-black font-medium"
-            : "border-transparent text-gray-500 hover:text-gray-700"
+            ? "border-black font-medium text-black dark:border-white dark:text-white"
+            : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
         }`}
       >
         <div className="relative">
           <LayoutGrid className="w-4 h-4" />
-          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 sm:hidden">
+          <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-300 sm:hidden">
             {allCount}
           </span>
         </div>
         <span className="hidden sm:inline">All</span>
-        <span className="hidden text-sm text-gray-400 sm:inline">
+        <span className="hidden text-sm text-gray-400 dark:text-gray-500 sm:inline">
           {allCount}
         </span>
         {activeTab === "all" && (
           <motion.div
             layoutId="highlight"
-            className="w-full h-0.5 bg-black absolute bottom-0 left-0 translate-y-1/2"
+            className="absolute bottom-0 left-0 h-0.5 w-full translate-y-1/2 bg-black dark:bg-white"
           />
         )}
       </button>
@@ -61,15 +61,15 @@ export const Tabs = ({
           <button
             key={dropdownOptionName}
             onClick={() => setActiveTab(dropdownOptionName)}
-            className={`relative box-border flex items-center gap-2 px-2 pb-2 transition-colors cursor-pointer ${
+            className={`relative box-border flex cursor-pointer items-center gap-2 px-2 pb-2 transition-colors ${
               activeTab === dropdownOptionName
-                ? "border-black text-black font-medium"
-                : "border-transparent text-gray-500 hover:text-gray-700"
+                ? "border-black font-medium text-black dark:border-white dark:text-white"
+                : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
             }`}
           >
             <div className="relative">
             <value.Icon className="w-4 h-4" />
-            <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 sm:hidden">
+            <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-gray-200 text-xs text-gray-500 dark:bg-gray-700 dark:text-gray-300 sm:hidden">
               {results.filter((r) => r.type === dropdownOptionName).length}
             </span>
           </div>
@@ -77,13 +77,13 @@ export const Tabs = ({
               {dropdownOptionName.charAt(0).toUpperCase() +
                 dropdownOptionName.slice(1)}
             </span>
-            <span className="hidden text-sm text-gray-400 sm:inline">
+            <span className="hidden text-sm text-gray-400 dark:text-gray-500 sm:inline">
               {results.filter((r) => r.type === dropdownOptionName).length}
             </span>
             {activeTab === dropdownOptionName && (
               <motion.div
                 layoutId="highlight"
-                className="w-full h-0.5 bg-black absolute bottom-0 left-0 translate-y-1/2"
+                className="absolute bottom-0 left-0 h-0.5 w-full translate-y-1/2 bg-black dark:bg-white"
               />
             )}
           </button>

@@ -66,11 +66,11 @@ export const Dropdown = ({
   return (
     <div className="relative z-10" ref={dropdownRef}>
       <div
-        className="flex items-stretch px-3 pb-2 cursor-pointer"
+        className="flex cursor-pointer items-stretch px-3 pb-2"
         onClick={() => setShowDropdown(!showDropdown)}
       >
         <Settings
-          className={`w-6 h-6 text-gray-400 transition-transform ${
+          className={`h-6 w-6 text-gray-400 transition-transform dark:text-gray-500 ${
             showDropdown ? "rotate-90" : "rotate-0"
           } `}
         />
@@ -78,7 +78,7 @@ export const Dropdown = ({
       <AnimatePresence>
         {showDropdown && (
           <motion.div
-            className="absolute right-0 -bottom-2 translate-y-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200  z-50 overflow-hidden"
+            className="absolute right-0 -bottom-2 z-50 mt-2 w-48 translate-y-full overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg dark:border-gray-700 dark:bg-gray-900"
             transition={{
               height: { duration: 0.3 },
               opacity: { duration: 0.2 },
@@ -107,8 +107,8 @@ export const Dropdown = ({
                     <div
                       className={`flex items-center gap-2 ${
                         contentFilters[dropdownOptionName]
-                          ? "text-gray-600"
-                          : "text-gray-400"
+                          ? "text-gray-600 dark:text-gray-200"
+                          : "text-gray-400 dark:text-gray-500"
                       }`}
                     >
                       <value.Icon className={"w-4 h-4"} />

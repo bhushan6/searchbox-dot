@@ -116,7 +116,7 @@ export function SearchBox() {
 
   return (
     <motion.div
-      className={`w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg`}
+      className="mx-auto w-full max-w-2xl rounded-2xl bg-white shadow-lg transition-colors dark:bg-gray-900"
       ref={containerRef}
       initial={false}
       transition={{
@@ -127,9 +127,9 @@ export function SearchBox() {
       <div ref={ref}>
         <div className="relative p-4 h-full">
           {isLoading ? (
-            <Loader2 className="absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 animate-spin" />
+            <Loader2 className="absolute left-7 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400 dark:text-gray-500 animate-spin" />
           ) : (
-            <Search className="absolute left-7 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 " />
+            <Search className="absolute left-7 top-1/2 h-5 w-5 -translate-y-1/2 transform text-gray-400 dark:text-gray-500" />
           )}
           <Input
             name="search-box"
@@ -137,7 +137,7 @@ export function SearchBox() {
             placeholder="Search..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full pl-12 pr-20 shadow-none focus-visible:shadow-none outline-0 border-0 focus:ring-0 focus-visible:ring-0 focus:border-transparent bg-transparent"
+            className="w-full border-0 bg-transparent pl-12 pr-20 text-gray-900 shadow-none outline-0 focus:border-transparent focus:ring-0 focus-visible:ring-0 focus-visible:shadow-none dark:text-gray-100"
             ref={inputRef}
           />
           <div className="absolute right-6 top-1/2 transform -translate-y-1/2 flex items-center gap-2">
@@ -146,7 +146,7 @@ export function SearchBox() {
                 variant="ghost"
                 size="sm"
                 onClick={handleClear}
-                className="text-gray-500 hover:text-gray-700 underline"
+                className="text-gray-500 underline hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
               >
                 Clear
               </Button>
@@ -162,7 +162,7 @@ export function SearchBox() {
         </div>
 
         {(query.length > 0 || results.length > 0) && (
-          <div className="flex items-center justify-between px-4 border-b">
+          <div className="flex items-center justify-between border-b border-gray-200 px-4 dark:border-gray-800">
             <Tabs
               contentFilters={contentFilters}
               results={results}
@@ -201,7 +201,7 @@ export function SearchBox() {
               ))}
             </div>
           ) : query.length > 0 ? (
-            <div className="p-8 text-center text-gray-500">
+            <div className="p-8 text-center text-gray-500 dark:text-gray-400">
               No results found for &#39;{query}&#39;
             </div>
           ) : null}
