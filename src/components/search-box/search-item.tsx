@@ -25,7 +25,7 @@ const HighlightText = ({ text = "", highlight = "" }) => {
     <span className="truncate inline-block max-w-full">
       {parts.map((part, index) =>
         part.toLowerCase() === highlight.toLowerCase() ? (
-          <span key={index} className="bg-orange-200">
+          <span key={index} className="bg-orange-200 dark:bg-orange-900 dark:text-orange-100">
             {part}
           </span>
         ) : (
@@ -48,7 +48,7 @@ const CopyLinkButton = () => {
       <TooltipTrigger asChild>
         <Button
           variant={"ghost"}
-          className="cursor-pointer text-gray-400"
+          className="cursor-pointer text-gray-400 hover:text-gray-600 dark:text-gray-500 dark:hover:text-gray-300"
           onPointerEnter={() => setIsOpen(true)}
           onPointerLeave={() => setIsOpen(false)}
           onClick={(e) => {
@@ -76,7 +76,7 @@ export const SearchItem = ({
 }) => (
   <div
     key={result.id}
-    className="p-3 hover:bg-gray-50 rounded-lg cursor-pointer flex items-center justify-between gap-3"
+    className="flex cursor-pointer items-center justify-between gap-3 rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-800"
   >
     <div className="flex items-center gap-3 min-w-0 flex-1">
       {result.type === "people" ? (
@@ -94,36 +94,36 @@ export const SearchItem = ({
             </AvatarFallback>
           </Avatar>
           <div
-            className={`absolute bottom-0 right-0 w-3 h-3 rounded-full border-2 border-white ${
+            className={`absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-white dark:border-gray-900 ${
               result.status === "active" ? "bg-yellow-400" : "bg-red-400"
             }`}
           />
         </div>
       ) : (
-        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 dark:bg-gray-800">
           {result.type === "files" && result.fileType === "video" ? (
-            <Play className="w-5 h-5 text-gray-600" />
+            <Play className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           ) : result.type === "files" ? (
-            <Paperclip className="w-5 h-5 text-gray-600" />
+            <Paperclip className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           ) : result.type === "chats" ? (
-            <MessageCircle className="w-5 h-5 text-gray-600" />
+            <MessageCircle className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           ) : (
-            <List className="w-5 h-5 text-gray-600" />
+            <List className="h-5 w-5 text-gray-600 dark:text-gray-300" />
           )}
         </div>
       )}
       <div className="min-w-0 flex-1">
-        <div className="font-medium text-gray-900 truncate">
+        <div className="truncate font-medium text-gray-900 dark:text-gray-100">
           <HighlightText text={result.name} highlight={query} />
         </div>
-        <div className="text-sm text-gray-500 truncate">{result.subtitle}</div>
+        <div className="truncate text-sm text-gray-500 dark:text-gray-400">{result.subtitle}</div>
       </div>
     </div>
     <div className="flex items-center justify-center flex-shrink-0">
       <CopyLinkButton />
       <Button
         variant={"ghost"}
-        className="cursor-pointer text-gray-400 items-center gap-2 flex"
+        className="flex cursor-pointer items-center gap-2 text-gray-400 dark:text-gray-500 dark:hover:text-gray-300"
       >
         <SquareArrowOutUpRight />
         <span className="hidden sm:inline">New Tab</span>
